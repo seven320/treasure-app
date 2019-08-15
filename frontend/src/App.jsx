@@ -1,13 +1,15 @@
-import { h, Component } from "preact";
+import React from "react";
 import firebase from "./firebase";
 import { getPrivateMessage, getPublicMessage } from "./api";
 
-class App extends Component {
+class App extends React.Component {
   constructor() {
     super();
-    this.state.user = null;
-    this.state.message = "";
-    this.state.errorMessage = "";
+    this.state = {
+      user: null,
+      message: "",
+      errorMessage: ""
+    };
   }
 
   componentDidMount() {
@@ -40,14 +42,14 @@ class App extends Component {
       });
   }
 
-  render(props, state) {
-    if (state.user === null) {
+  render() {
+    if (this.state.user === null) {
       return <button onClick={firebase.login}>Please login</button>;
     }
     return (
       <div>
-        <div>{state.message}</div>
-        <p style="color:red;">{state.errorMessage}</p>
+        <div>{this.state.message}</div>
+        <p style={{ color: "red" }}>{this.state.errorMessage}</p>
         <button onClick={this.getPrivateMessage.bind(this)}>
           Get Private Message
         </button>
